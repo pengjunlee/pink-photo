@@ -1,4 +1,5 @@
 'use strict'
+const webpack = require('webpack')
 const path = require('path')
 const defaultSettings = require('./src/settings.js')
 
@@ -17,7 +18,7 @@ module.exports = {
   /**
    * You will need to set publicPath if you plan to deploy your site under a sub path,
    * for example GitHub Pages. If you plan to deploy your site to https://foo.github.io/bar/,
-   * then publicPath should be set to "/bar/".
+   * then publicPath should be set to '/bar/'.
    * In most cases please use '/' !!!
    * Detail: https://cli.vuejs.org/config/#publicpath
    */
@@ -43,7 +44,18 @@ module.exports = {
       alias: {
         '@': resolve('src')
       }
-    }
+    },
+    externals: {
+      'BMap': 'BMap'
+    },
+    // 支持jquery
+    plugins: [
+      new webpack.ProvidePlugin({
+        $: 'jquery',
+        jQuery: 'jquery',
+        'windows.jQuery': 'jquery'
+      })
+    ]
   },
   chainWebpack(config) {
     config.plugins.delete('preload') // TODO: need test

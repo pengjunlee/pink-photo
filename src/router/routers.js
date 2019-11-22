@@ -13,7 +13,7 @@ import Layout from '@/layout'
  * redirect: noRedirect           if set noRedirect will no redirect in the breadcrumb
  * name:'router-name'             the name is used by <keep-alive> (must set!!!)
  * meta : {
-    roles: ['admin','editor']    control the page roles (you can set multiple roles)
+    roles: ['administrator','editor']    control the page roles (you can set multiple roles)
     title: 'title'               the name show in sidebar and breadcrumb (recommend set)
     icon: 'svg-name'             the icon show in the sidebar
     noCache: true                if set true, the page will no be cached(default is false)
@@ -92,7 +92,7 @@ export const asyncRoutes = [
     meta: {
       title: '开发辅助',
       icon: 'education',
-      roles: ['admin'] // you can set roles in root nav
+      roles: ['administrator'] // you can set roles in root nav
     },
     children: [
       {
@@ -109,22 +109,60 @@ export const asyncRoutes = [
       }
     ]
   }, {
-    path: '/system',
+    path: '/device',
     component: Layout,
-    redirect: '/system/usermgt',
+    redirect: '/device/list',
     alwaysShow: true, // will always show the root menu
-    name: 'System',
+    name: 'Device',
     meta: {
-      title: '系统管理',
-      icon: 'system_mgt',
-      roles: ['admin'] // you can set roles in root nav
+      title: '设备管理',
+      icon: 'device_mgt',
+      roles: ['administrator'] // you can set roles in root nav
     },
     children: [
       {
-        path: 'usermgt',
-        component: () => import('@/views/system/user'),
-        name: 'UserMgt',
-        meta: { title: '用户管理', icon: 'user', noCache: true }
+        path: 'list',
+        component: () => import('@/views/device'),
+        name: 'DeviceList',
+        meta: { title: '设备列表', icon: 'device', noCache: true }
+      },
+      {
+        path: 'detail/:deviceId(\\d+)',
+        component: () => import('@/views/device/detail'),
+        name: 'DeviceDetail',
+        meta: { title: '设备详情', noCache: true, activeMenu: '/device/list' },
+        hidden: true
+      },
+      {
+        path: 'pose/list',
+        component: () => import('@/views/device/pose'),
+        name: 'PoseList',
+        meta: { title: '姿势素材库', icon: 'pose', noCache: true }
+      },
+      {
+        path: 'theme/list',
+        component: () => import('@/views/device/theme'),
+        name: 'ThemeList',
+        meta: { title: '主题素材库', icon: 'theme', noCache: true }
+      }
+    ]
+  }, {
+    path: '/merchant',
+    component: Layout,
+    redirect: '/merchant/list',
+    alwaysShow: true, // will always show the root menu
+    name: 'Merchant',
+    meta: {
+      title: '合作商管理',
+      icon: 'peoples',
+      roles: ['administrator'] // you can set roles in root nav
+    },
+    children: [
+      {
+        path: 'list',
+        component: () => import('@/views/merchant'),
+        name: 'MerchantList',
+        meta: { title: '合作商列表', icon: 'user', noCache: true }
       }
     ]
   },
@@ -150,24 +188,6 @@ export const asyncRoutes = [
         component: () => import('@/views/error-page/404'),
         name: 'Page404',
         meta: { title: '404', noCache: true }
-      }
-    ]
-  },
-  {
-    path: '/theme',
-    component: Layout,
-    name: 'Theme',
-    meta: {
-      title: '个性设置',
-      icon: 'settings',
-      roles: ['admin'] // you can set roles in root nav
-    },
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/theme/index'),
-        name: 'ThemeIndex',
-        meta: { title: '换肤', icon: 'theme' }
       }
     ]
   },

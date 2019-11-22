@@ -174,12 +174,22 @@ aside {
 }
 
 .filter-container {
-  padding-bottom: 10px;
+  padding: 10px;
+  background-color: whitesmoke;
 
   .filter-item {
     display: inline-block;
     vertical-align: middle;
     margin-bottom: 10px;
+  }
+}
+
+.operater-container {
+  padding: 10px;
+
+  .operater-item {
+    display: inline-block;
+    vertical-align: middle;
   }
 }
 
